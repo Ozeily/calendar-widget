@@ -1,73 +1,79 @@
-/* === RESET GLOBAL === */
+/* === Variables === */
+:root {
+  --bg-colour: #878787;
+  --cal-colour: #ffffff;
+  --accent: #959595;
+  --border-rad: 10px;
+  --debug-outline: none;
+}
+
+/* === Reset === */
 * {
   box-sizing: border-box;
-  border: 0;
   margin: 0;
   padding: 0;
+  border: 0;
 }
 
 html, body {
   width: 100vw;
   height: 100vh;
-  margin: 0;
-  padding: 0;
 }
 
-/* === ICONS === */
-.material-symbols-rounded {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24;
-  cursor: pointer;
-}
-
-/* === FONTS === */
-@font-face {
-  font-family: romantic;
-  src: url(fonts/ROMANTIC.TTF);
-}
-
-@font-face {
-  font-family: papernotes;
-  src: url(fonts/Papernotes.ttf);
-}
-
-@font-face {
-  font-family: tangerine;
-  src: url(fonts/tangerine.ttf);
-}
-
-/* === CALENDAR WIDGET === */
-
+/* === Base === */
 body {
-  height: 100vh;
-  background-color: lightgrey;
+  background-color: var(--bg-colour);
   font-family: papernotes;
   letter-spacing: 3px;
   user-select: none;
 }
 
+/* === Fonts === */
+@font-face {
+  font-family: romantic;
+  src: url("fonts/ROMANTIC.TTF");
+}
+
+@font-face {
+  font-family: papernotes;
+  src: url("fonts/Papernotes.ttf");
+}
+
+@font-face {
+  font-family: tangerine;
+  src: url("fonts/tangerine.ttf");
+}
+
+/* === Icons === */
+.material-symbols-rounded {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  cursor: pointer;
+}
+
+/* === Calendar === */
 .calendar-div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: bisque;
-  outline: 1px solid black;
+  background-color: var(--cal-colour);
+  outline: var(--debug-outline);
   height: 400px;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1 / 1;
   padding: 10px;
+  border-radius: var(--border-rad);
 }
 
-/*--- HEADER ---*/
-
+/* Header */
 .calendar-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  outline: 1px solid;
+  outline: var(--debug-outline);
   width: 100%;
   padding: 10px;
 }
@@ -79,24 +85,22 @@ body {
   font-size: 24px;
 }
 
+/* Body */
 .calendar-body {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: 1fr 6fr;
   grid-template-areas: 
     "weekday weekday weekday weekday weekday weekday weekday"
-    "day day day day day day day";
-  outline: 1px solid black;
+    "day     day     day     day     day     day     day";
+  outline: var(--debug-outline);
   text-align: center;
   flex: 1;
   width: 100%;
   height: 100%;
 }
 
-.weekday {
-  outline: 1px solid black;
-}
-
+/* Weekdays */
 #weekdays {
   grid-area: weekday;
   display: grid;
@@ -109,19 +113,26 @@ body {
   align-items: center;
 }
 
+.weekday {
+  outline: var(--debug-outline);
+}
 
-
+/* Days */
 #days {
   grid-area: day;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
 
-.day, .blank {
+.day,
+.blank {
   display: flex;
-  outline: 1px solid black;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  outline: var(--debug-outline);
 }
 
-
+.current-date {
+  background-color: var(--accent);
+  border-radius: var(--border-rad);
+}

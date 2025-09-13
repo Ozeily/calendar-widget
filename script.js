@@ -64,8 +64,16 @@ function displayDays(month, year) {
     // Populate the days
     for (let i = 1; i <= daysInMonth; i++) {
         const day = document.createElement('div');
-        day.classList.add('day')
+        let divDay = new Date(year, month, i);
+
         day.textContent = i;
+        day.classList.add('day')
+        day.dataset.date = divDay.toDateString();
+        if (
+            divDay.getFullYear() === currentYear &&
+            divDay.getMonth() === currentMonthIndex &&
+            divDay.getDate() === currentDate.getDate()
+        ) { day.classList.add('current-date') }
         daysDiv.appendChild(day);
     }
 }
