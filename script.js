@@ -1,19 +1,20 @@
 //elements
-const calendarDates = document.getElementById("days");
-const month = document.getElementById("month");
-const year = document.getElementById("year");
+const daysDiv = document.getElementById("days");
+const monthDiv = document.getElementById("month");
+const yearDiv = document.getElementById("year");
 
-const prevMonth = document.getElementById("prev-month");
-const nextMonth = document.getElementById("next-month");
+const prevMonthBtn = document.getElementById("prev-month");
+const nextMonthBtn = document.getElementById("next-month");
 
 //current
-const currentDate = new Date();
-const currentYear = currentDate.getFullYear();
-const currentMonth = capitalize(currentDate.toLocaleString('default', { month: 'long' }));
-const currentMonthIndex = currentDate.getMonth()
+let currentDate = new Date();
+let currentYear = currentDate.getFullYear();
+let currentMonth = capitalize(currentDate.toLocaleString('default', { month: 'long' }));
+let currentMonthIndex = currentDate.getMonth()
 
-document.getElementById('year').textContent = currentYear;
-document.getElementById('month').textContent = currentMonth;
+//variables
+let selectedMonth = currentMonthIndex;
+let selectedYear = currentYear;
 
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -49,7 +50,7 @@ function displayWeekDays() {
 displayWeekDays();
 
 function displayDays(month, year) {
-    calendarDates.innerHTML = '';
+    daysDiv.innerHTML = '';
     let firstDay = (new Date(year, month, 1).getDay() + 6) % 7; //monday = 1st day
     let daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -57,7 +58,7 @@ function displayDays(month, year) {
     for (let i = 0; i < firstDay; i++) {
         const blank = document.createElement('div');
         blank.classList.add("blank")
-        calendarDates.appendChild(blank);
+        daysDiv.appendChild(blank);
     }
 
     // Populate the days
@@ -65,12 +66,31 @@ function displayDays(month, year) {
         const day = document.createElement('div');
         day.classList.add('day')
         day.textContent = i;
-        calendarDates.appendChild(day);
+        daysDiv.appendChild(day);
     }
 }
 
 function renderCalendar(month, year) {
     displayDays(month, year);
+    yearDiv.textContent = year;
+    monthDiv.textContent = capitalize(new Date(year, month).toLocaleString('default', {month: 'long'}));
 }
 
-renderCalendar(currentMonthIndex, currentYear)
+renderCalendar(currentMonthIndex, currentYear);
+
+//controls
+
+function previousMonth() {
+    if (selectedMonth === 0) { selectedMonth = 11; selectedYear -= 1}
+    else { selectedMonth -= 1}
+    renderCalendar(selectedMonth, selectedYear)
+}
+
+function nextMonth() {
+    if (selectedMonth === 11) { selectedMonth = 0; selectedYear += 1}
+    else { selectedMonth += 1}
+    renderCalendar(selectedMonth, selectedYear)
+}
+
+prevMonthBtn.addEventListener("click", previousMonth)
+nextMonthBtn.addEventListener("click", nextMonth)
