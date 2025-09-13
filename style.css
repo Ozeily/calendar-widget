@@ -1,0 +1,124 @@
+/* === RESET GLOBAL === */
+* {
+  box-sizing: border-box;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* === ICONS === */
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+/* === FONTS === */
+@font-face {
+  font-family: romantic;
+  src: url(fonts/ROMANTIC.TTF);
+}
+
+@font-face {
+  font-family: papernotes;
+  src: url(fonts/Papernotes.ttf);
+}
+
+@font-face {
+  font-family: tangerine;
+  src: url(fonts/tangerine.ttf);
+}
+
+/* === CALENDAR WIDGET === */
+
+body {
+  height: 100vh;
+  background-color: lightgrey;
+  font-family: papernotes;
+  letter-spacing: 3px;
+}
+
+.calendar-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: bisque;
+  outline: 1px solid black;
+  height: 400px;
+  aspect-ratio: 1/1;
+  padding: 10px;
+}
+
+/*--- HEADER ---*/
+
+.calendar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  outline: 1px solid;
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.calendar-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr 6fr;
+  grid-template-areas: 
+    "weekday weekday weekday weekday weekday weekday weekday"
+    "day day day day day day day";
+  outline: 1px solid black;
+  text-align: center;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.weekday {
+  outline: 1px solid black;
+}
+
+#weekdays {
+  grid-area: weekday;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+#weekdays > p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+#days {
+  grid-area: day;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day, .blank {
+  display: flex;
+  outline: 1px solid black;
+  align-items: center;
+  justify-content: center;
+}
+
+
