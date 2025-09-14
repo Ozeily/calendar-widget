@@ -14,9 +14,9 @@ function addSetting(cbox) {
 
 if (form) {
     form.addEventListener('input', () => {
-        const data = new formData(form);
+        const data = new FormData(form);
         const params = new URLSearchParams(data);
-        preview.src = '/widget/widget.html' + params.toString()
+        preview.src = '/widget/widget.html?' + params.toString()
 
     })
   }
@@ -24,7 +24,7 @@ if (form) {
 function copyUrl() {
     const data = new formData(form);
     const params = new URLSearchParams(data);
-    const url = 'https://ozeily.github.io/embeddable-calendar-widget/widget/widget.html' + params.toString();
+    const url = 'https://ozeily.github.io/embeddable-calendar-widget/widget/widget.html?' + params.toString();
 
     navigator.clipboard.writeText(url)
 }
