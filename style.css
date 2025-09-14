@@ -85,18 +85,18 @@ body {
   padding: 5px 0 5px 0;
 }
 
-#year { font-size: 5vw;}
+#year { font-size: clamp(0.9rem, 5vw, 2rem);}
 
 .controls {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 10vw
+  font-size: clamp(1.2rem, 10vw, 3rem);
 }
 
 .controls > span { 
   color: var(--greyed-out);
-  font-size: 9vw
+  font-size: clamp(1.1rem, 9vw, 2.7rem)
 }
 .controls > span:hover { color: var(--text)}
 
@@ -112,7 +112,7 @@ body {
   text-align: center;
   flex: 1;
   width: 100%;
-  font-size: 7vw;
+  font-size: clamp(0.9rem, 7vw, 2rem);;
 }
 
 
