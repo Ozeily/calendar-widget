@@ -89,16 +89,29 @@ body {
 
 .controls {
   display: flex;
-  justify-content: center;
+  width: 100%;
+  justify-content: space-between;
   align-items: center;
   font-size: clamp(1.2rem, 10vw, 3rem);
+  outline: var(--debug-outline);
 }
 
 .controls > span { 
+  display: flex;
+  width: 10%;
+  outline: var(--debug-outline);
   color: var(--greyed-out);
-  font-size: clamp(1.1rem, 9vw, 2.7rem)
+  font-size: clamp(1.1rem, 9vw, 2.7rem);
+  justify-content: center;
+  align-items: center;
 }
 .controls > span:hover { color: var(--text)}
+
+#prev-month {
+  padding-left: 15px;
+}
+
+.controls > p { outline: var(--debug-outline)}
 
 /* Body */
 .calendar-body {
