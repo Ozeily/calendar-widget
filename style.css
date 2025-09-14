@@ -19,7 +19,6 @@
 
 html, body {
   width: 100%;
-  height: 100vh;
 }
 
 /* === Base === */
@@ -63,9 +62,10 @@ body {
   align-items: center;
   background-color: var(--cal-colour);
   max-width: 100%;
+  height: 100%;
   border-radius: var(--border-rad);
   border: 1px solid var(--greyed-out);
-  padding: 10px
+  padding: 10px;
 }
 
 .calendar-wrapper {
@@ -85,16 +85,19 @@ body {
   padding: 5px 0 5px 0;
 }
 
-#year { font-size: smaller;}
+#year { font-size: 5vw;}
 
 .controls {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 10vw
 }
 
-.controls > span { color: var(--greyed-out)}
+.controls > span { 
+  color: var(--greyed-out);
+  font-size: 9vw
+}
 .controls > span:hover { color: var(--text)}
 
 /* Body */
@@ -109,6 +112,7 @@ body {
   text-align: center;
   flex: 1;
   width: 100%;
+  font-size: 7vw;
 }
 
 
