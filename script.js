@@ -53,10 +53,14 @@ function displayDays(month, year) {
     daysDiv.innerHTML = '';
     let firstDay = (new Date(year, month, 1).getDay() + 6) % 7; //monday = 1st day
     let daysInMonth = new Date(year, month + 1, 0).getDate();
+    let prevMonthDays = new Date(year, month, 0).getDate(); 
+    let blanksBefore = firstDay;
+    let blanksAfter = 42 - daysInMonth - blanksBefore;
 
     //add blanks before 1st day
-    for (let i = 0; i < firstDay; i++) {
+    for (let i = 1; i <= blanksBefore; i++) {
         const blank = document.createElement('div');
+        blank.textContent = prevMonthDays - blanksBefore +i;
         blank.classList.add("blank")
         daysDiv.appendChild(blank);
     }
@@ -75,6 +79,14 @@ function displayDays(month, year) {
             divDay.getDate() === currentDate.getDate()
         ) { day.classList.add('current-date') }
         daysDiv.appendChild(day);
+    }
+
+    //add blanks after last day
+    for (let i = 1; i <= blanksAfter; i++) {
+        const blank = document.createElement('div');
+        blank.textContent = i;
+        blank.classList.add("blank")
+        daysDiv.appendChild(blank);
     }
 }
 
