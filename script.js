@@ -58,36 +58,47 @@ function displayDays(month, year) {
     let blanksAfter = 42 - daysInMonth - blanksBefore;
 
     //add blanks before 1st day
-    for (let i = 1; i <= blanksBefore; i++) {
-        const blank = document.createElement('div');
-        blank.textContent = prevMonthDays - blanksBefore +i;
-        blank.classList.add("blank")
-        daysDiv.appendChild(blank);
+for (let i = 1; i <= blanksBefore; i++) {
+    const blank = document.createElement('div');
+    blank.classList.add("blank");
+    const span = document.createElement('span');
+    span.textContent = prevMonthDays - blanksBefore + i;
+    blank.appendChild(span);
+    daysDiv.appendChild(blank);
+}
+
+// Populate the days
+for (let i = 1; i <= daysInMonth; i++) {
+    const day = document.createElement('div');  // div plutôt que span pour cohérence CSS
+    day.classList.add('day');
+    day.dataset.date = new Date(year, month, i).toDateString();
+    const span = document.createElement('span');
+    span.textContent = i;
+    day.appendChild(span);
+
+    // classe current-date si date du jour
+    let divDay = new Date(year, month, i);
+    if (
+        divDay.getFullYear() === currentYear &&
+        divDay.getMonth() === currentMonthIndex &&
+        divDay.getDate() === currentDate.getDate()
+    ) {
+        day.classList.add('current-date');
     }
 
-    // Populate the days
-    for (let i = 1; i <= daysInMonth; i++) {
-        const day = document.createElement('div');
-        let divDay = new Date(year, month, i);
+    daysDiv.appendChild(day);
+}
 
-        day.textContent = i;
-        day.classList.add('day')
-        day.dataset.date = divDay.toDateString();
-        if (
-            divDay.getFullYear() === currentYear &&
-            divDay.getMonth() === currentMonthIndex &&
-            divDay.getDate() === currentDate.getDate()
-        ) { day.classList.add('current-date') }
-        daysDiv.appendChild(day);
-    }
+//add blanks after last day
+for (let i = 1; i <= blanksAfter; i++) {
+    const blank = document.createElement('div');
+    blank.classList.add("blank");
+    const span = document.createElement('span');
+    span.textContent = i;
+    blank.appendChild(span);
+    daysDiv.appendChild(blank);
+}
 
-    //add blanks after last day
-    for (let i = 1; i <= blanksAfter; i++) {
-        const blank = document.createElement('div');
-        blank.textContent = i;
-        blank.classList.add("blank")
-        daysDiv.appendChild(blank);
-    }
 }
 
 function renderCalendar(month, year) {

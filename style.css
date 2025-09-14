@@ -62,8 +62,7 @@ body {
   flex-direction: column;
   align-items: center;
   background-color: var(--cal-colour);
-  max-width: 400px;
-  width: 70vw;
+  max-width: 100%;
   border-radius: var(--border-rad);
   border: 1px solid var(--greyed-out);
   padding: 10px
@@ -139,11 +138,24 @@ body {
 
 .day,
 .blank {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* height = width -> square */
+  outline: var(--debug-outline);
+  border-radius: var(--border-rad);
+  background-color: transparent;
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+.day > span,
+.blank > span {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  outline: var(--debug-outline);
-  aspect-ratio: 1/1;
+  user-select: none;
 }
 
 .blank { color: var(--greyed-out);}
