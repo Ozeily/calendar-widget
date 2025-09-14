@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"></style>
+    <script src="script.js"></script>
+    <title>Custom embeddable widget</title>
+</head>
+<body>
+    <div class="settings">
+        <h1>Settings</h1>
+        <form action="" id="form">
+        
+            <div class="setting">
+                <label for="rounded">Rounded</label>
+                <input type="checkbox" class="toggle" id="rounded" name="rounded">
+            </div>
+
+            <div class="setting">
+                <label for="currDate-highlight">Current date highlight</label>
+                <input type="checkbox" class="toggle" id="currDate-highlight" name="currDate-highlight">
+            </div>
+
+            <div class="setting">
+                <label>Calendar colour</label>
+                <input id="calendar-colour" type="color" name="calendar-colour">
+            </div>
+
+            <div class="setting">
+                <label for="font">Font</label>
+                <select id="font" name="font" name="font">
+                    <option>Papernotes</option>
+                    <option>Romantic</option>
+                    <option>tangerine</option>
+                </select>
+            </div>
+
+            <div class="setting">
+                <label>Text colour</label>
+                <input id="text-colour" type="color" name="text-colour">
+            </div>
+
+            <div class="setting">
+                <label>Accent colour</label>
+                <input id="accent-colour" type="color" name="accent-colour">
+            </div>
+
+            <div class="setting">
+                <label>Greyed-out colour</label>
+                <input id="greyed-out-colour" type="color" name="greyed-out-colour">
+            </div>
+
+            <div class="big-setting banner">
+                <div class="setting">
+                    <label>Banner</label>
+                    <input id="banner" type="checkbox" onclick="addSetting(this)">
+                </div>
+                <div class="setting banner secondary-setting">
+                    <label class="">Banner image</label>
+                    <input id="banner-img" type="file" name="banner-img">
+                </div>
+            </div>
+            
+            <button id="copy-url">Copy URL</button>
+        </form>
+    </div>
+
+    <iframe src="../widget/widget.html" height="350.5" id="ppreview"></iframe>
+</body>
+</html>

@@ -1,0 +1,62 @@
+/* === Variables === */
+:root {
+    --debug-outline: 1px solid;
+}
+
+/* === Reset === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: var(--debug-outline)
+}
+
+html, body {
+  width: 100%;
+}
+
+/* === Layout === */
+
+body {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* === Settings === */
+
+.settings {
+    width: 50%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.big-setting {
+    display: flex;
+    flex-direction: column;
+    background-color: grey;
+}
+.setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px;
+}
+
+.secondary-setting {
+    display: none;
+}
+
+.secondary-setting.displayed {
+    display: flex;
+}
+
+input[type=color] {
+    width: 20px;
+    height: 20px;
+    border-radius: 15%;
+}
+
