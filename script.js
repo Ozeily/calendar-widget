@@ -16,7 +16,7 @@ if (form) {
     form.addEventListener('input', () => {
         const data = new formData(form);
         const params = new URLSearchParams(data);
-        preview.src = 'https://ozeily.github.io/embeddable-calendar-widget/widget/widget.html' + params.toString()
+        preview.src = '/widget/widget.html' + params.toString()
 
     })
   }
