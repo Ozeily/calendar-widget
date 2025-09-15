@@ -19,7 +19,7 @@ if (form) {
         preview.src = 'widget/widget.html?' + params.toString()
 
     })
-  }
+}
 
 function copyUrl() {
     const data = new FormData(form);
@@ -27,4 +27,6 @@ function copyUrl() {
     const url = 'https://ozeily.github.io/embeddable-calendar-widget/widget/widget.html?' + params.toString();
 
     navigator.clipboard.writeText(url)
+    .then(() => { alert('Texte copié:' + url) })
+    .catch(err => { alert('Erreur: ' + err)})
 }
