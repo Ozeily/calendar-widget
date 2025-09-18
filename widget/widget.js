@@ -21,7 +21,7 @@ let selectedYear = currentYear;
 //settings
 let params = new URLSearchParams(window.location.search);
 const root = document.querySelector(":root");
-const cssVars = getComputedStyle(document.documentElement)
+
 
 function applySettings(settings) {
     //apply values to CSS variables
@@ -43,7 +43,7 @@ function getParamsObject(params) {
     params.forEach((value, key) => {
         if (key.endsWith('-colour') || key === 'font') {
             settings[key] = value;
-        } else if (params.has("rounded")) {
+        } else if (key === "rounded") {
             settings[key] = value === 'true';
         }
     })
@@ -52,33 +52,59 @@ function getParamsObject(params) {
 }
 
 function applyCheckboxes() {
-    if (!form) return;
-    const roundedCBox = form.querySelector('[name=rounded]');
-    if (!roundedCBox) {return};
-    const isRounded = roundedCBox.checked;
+    let isRounded = true;
+    if (form) {
+        const roundedCBox = form.querySelector('[name=rounded]');
+        if (roundedCBox) {
+            isRounded = roundedCBox.checked;
+        }
+        
+    }
+    console.log("applyCheckboxes, isRounded:", isRounded);
 
     document.querySelectorAll(".calendar-div, .current-date").forEach(elt => {
-        elt.classList.toggle("rounded", isRounded)
+        elt.classList.toggle("rounded", isRounded);
     });
+        
 }
 
 function setVarValue(variable, value) {
     root.style.setProperty('--' + variable, value)
 }
 
-if (form) { //with customisation interface
-    window.addEventListener("message", (event) => {
-    if (event.data?.type === "settings") {
-        const settings = event.data.payload;
-
-        applySettings(settings)
-    }});
-} else {
-    const settings = getParamsObject(params)
-    applySettings(settings)
-    
-}
 renderCalendar(currentMonthIndex, currentYear);
+
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM ready');
+    
+    // test que les éléments sont bien récupérés
+    console.log('daysDiv:', daysDiv);
+    console.log('monthDiv:', monthDiv);
+    console.log('yearDiv:', yearDiv);
+    console.log('prevMonthBtn:', prevMonthBtn);
+    console.log('nextMonthBtn:', nextMonthBtn);
+
+    if (form) { //with customisation interface
+        console.log("form found")
+        window.addEventListener("message", (event) => {
+        if (event.data?.type === "settings") {
+            const settings = event.data.payload;
+            renderCalendar(currentMonthIndex, currentYear);
+            applySettings(settings)
+            
+        }});
+    } else {
+        console.log("form not found")
+        const settings = getParamsObject(params)
+        applySettings(settings)
+        renderCalendar(currentMonthIndex, currentYear);
+        
+        
+    }
+    prevMonthBtn.addEventListener("click", previousMonth)
+    nextMonthBtn.addEventListener("click", nextMonth)
+})
+
 
 
 
@@ -169,6 +195,8 @@ for (let i = 1; i <= blanksAfter; i++) {
 }
 
 function renderCalendar(month, year) {
+    const cssVars = getComputedStyle(document.documentElement)
+
     displayDays(month, year);
     yearDiv.textContent = year;
     monthDiv.textContent = capitalize(new Date(year, month).toLocaleString('default', {month: 'long'}));
@@ -179,7 +207,7 @@ function renderCalendar(month, year) {
             const varName = '--' + input.name;
             const cssVarValue = cssVars.getPropertyValue(varName).trim();
 
-            if (cssVarValue) {
+            if (cssVarValue !== "") {
                 if (input.type === 'checkbox') { 
                     input.checked = cssVarValue === 'true';
                 };
@@ -208,5 +236,4 @@ function nextMonth() {
     renderCalendar(selectedMonth, selectedYear)
 }
 
-prevMonthBtn.addEventListener("click", previousMonth)
-nextMonthBtn.addEventListener("click", nextMonth)
+

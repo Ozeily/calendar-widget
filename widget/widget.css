@@ -171,7 +171,7 @@ body {
   padding-bottom: 100%; /* height = width -> square */
   outline: var(--debug-outline);
   /* border-radius: var(--border-rad); */
-  background-color: transparent;
+  background-color: var(--cal-colour);
   color: var(--text-colour);
   box-sizing: border-box;
 }
