@@ -19,7 +19,7 @@ let selectedMonth = currentMonthIndex;
 let selectedYear = currentYear;
 
 //settings
-//let params = new URLSearchParams(window.location.search);
+let params = new URLSearchParams(window.location.search);
 const root = document.querySelector(":root");
 const cssVars = getComputedStyle(document.documentElement)
 
@@ -29,19 +29,25 @@ function applyCheckboxes() {
     const isRounded = roundedCBox.checked;
 
     document.querySelectorAll(".calendar-div, .current-date").forEach(elt => {
-                        elt.classList.toggle("rounded", isRounded)
-                });
+        elt.classList.toggle("rounded", isRounded)
+    });
 }
 
 function setVarValue(variable, value) {
     root.style.setProperty('--' + variable, value)
 }
 
-// params.forEach((value, key) => {
-//     if (key.endsWith('-colour')) {
-//         setVarValue(key, value)
-//     }
-// })
+params.forEach((value, key) => {
+    if (key.endsWith('-colour') || key === 'font') {
+        setVarValue(key, value)
+    }
+})
+if (params.has("rounded")) {
+    const isRounded = params.get('rounded') === 'true';
+    document.querySelectorAll('.calendar-div, .current-date').forEach(elt => {
+        elt.classList.toggle('rounded', isRounded);
+    });
+}
 
 window.addEventListener("message", (event) => {
     if (event.data?.type === "settings") {
