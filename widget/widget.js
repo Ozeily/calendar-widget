@@ -23,7 +23,36 @@ let params = new URLSearchParams(window.location.search);
 const root = document.querySelector(":root");
 const cssVars = getComputedStyle(document.documentElement)
 
+function applySettings(settings) {
+    //apply values to CSS variables
+    for (const [key, value] of Object.entries(settings)) {
+        if (key.endsWith('-colour') || key === "font") {
+            setVarValue(key, value)
+        }
+        if (key === "rounded") {
+            document.querySelectorAll(".calendar-div, .current-date").forEach(elt => {
+                elt?.classList.toggle("rounded", value === true) //? avoids bug if elt isn't loaded yet
+            })
+        }
+    }
+}
+
+function getParamsObject(params) {
+    const settings = {};
+
+    params.forEach((value, key) => {
+        if (key.endsWith('-colour') || key === 'font') {
+            settings[key] = value;
+        } else if (params.has("rounded")) {
+            settings[key] = value === 'true';
+        }
+    })
+    
+    return settings
+}
+
 function applyCheckboxes() {
+    if (!form) return;
     const roundedCBox = form.querySelector('[name=rounded]');
     if (!roundedCBox) {return};
     const isRounded = roundedCBox.checked;
@@ -37,36 +66,22 @@ function setVarValue(variable, value) {
     root.style.setProperty('--' + variable, value)
 }
 
-params.forEach((value, key) => {
-    if (key.endsWith('-colour') || key === 'font') {
-        setVarValue(key, value)
-    }
-})
-if (params.has("rounded")) {
-    const isRounded = params.get('rounded') === 'true';
-    document.querySelectorAll('.calendar-div, .current-date').forEach(elt => {
-        elt.classList.toggle('rounded', isRounded);
-    });
-}
-
-window.addEventListener("message", (event) => {
+if (form) { //with customisation interface
+    window.addEventListener("message", (event) => {
     if (event.data?.type === "settings") {
         const settings = event.data.payload;
 
-        //apply values to CSS variables
-        for (const [key, value] of Object.entries(settings)) {
-            if (key.endsWith('-colour') || key === "font") {
-                setVarValue(key, value)
-            }
-            if (key === "rounded") {
-                document.querySelectorAll(".calendar-div, .current-date").forEach(elt => {
-                    elt?.classList.toggle("rounded", value === true) //? avoids bug if elt isn't loaded yet
-                })
-            }
-        }
+        applySettings(settings)
+    }});
+} else {
+    const settings = getParamsObject(params)
+    applySettings(settings)
+    
+}
+renderCalendar(currentMonthIndex, currentYear);
 
-    }
-})
+
+
 
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -159,21 +174,23 @@ function renderCalendar(month, year) {
     monthDiv.textContent = capitalize(new Date(year, month).toLocaleString('default', {month: 'long'}));
 
     //set default values
-    form.querySelectorAll('[name]').forEach(input => {
-        const varName = '--' + input.name;
-        const cssVarValue = cssVars.getPropertyValue(varName).trim();
+        form.querySelectorAll('[name]').forEach(input => {
+            const varName = '--' + input.name;
+            const cssVarValue = cssVars.getPropertyValue(varName).trim();
 
-        if (cssVarValue) {
-            if (input.type === 'checkbox') { return };
+            if (cssVarValue) {
+                if (input.type === 'checkbox') { 
+                    input.checked = cssVarValue === 'true';
+                };
 
-            input.value = cssVarValue;
-        }
-    });
+                input.value = cssVarValue;
+            }
+        });
 
     applyCheckboxes()
-}
+};
 
-renderCalendar(currentMonthIndex, currentYear);
+
 
 //controls
 

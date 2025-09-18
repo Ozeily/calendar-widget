@@ -60,3 +60,7 @@ input[type=color] {
     border-radius: 15%;
 }
 
+button:active {
+    background-color: grey;
+}
+
