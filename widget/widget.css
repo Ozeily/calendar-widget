@@ -1,12 +1,19 @@
 /* === Variables === */
 :root {
   --bg-colour: none;
-  --cal-colour: #ffffff;
-  --accent: #dbdbdb;
-  --border-rad: 10px;
   --debug-outline: none;
-  --text: #000000;
-  --greyed-out: #9d9d9d;
+
+  --border-rad: 10px;
+  --currDateHighlight: var(--accent);
+  --cal-colour: #ffffff;
+  --font: papernotes;
+  --text-colour: #000000;
+  --greyed-out-colour: #9d9d9d;
+  --banner: none;
+  --accent-colour: #dbdbdb;
+  
+  
+  
 }
 
 /* === Reset === */
@@ -64,7 +71,7 @@ body {
   max-width: 100%;
   height: 100%;
   border-radius: var(--border-rad);
-  border: 1px solid var(--greyed-out);
+  border: 1px solid var(--greyed-out-colour);
   padding: 10px;
 }
 
@@ -100,12 +107,12 @@ body {
   display: flex;
   width: 10%;
   outline: var(--debug-outline);
-  color: var(--greyed-out);
+  color: var(--greyed-out-colour);
   font-size: clamp(1.1rem, 9vw, 2.7rem);
   justify-content: center;
   align-items: center;
 }
-.controls > span:hover { color: var(--text)}
+.controls > span:hover { color: var(--text-colour)}
 
 #prev-month {
   padding-left: 15px;
@@ -161,7 +168,7 @@ body {
   outline: var(--debug-outline);
   border-radius: var(--border-rad);
   background-color: transparent;
-  color: var(--text);
+  color: var(--text-colour);
   box-sizing: border-box;
 }
 
@@ -175,9 +182,9 @@ body {
   user-select: none;
 }
 
-.blank { color: var(--greyed-out);}
+.blank { color: var(--greyed-out-colour);}
 
 .current-date {
-  background-color: var(--accent);
+  background-color: var(--accent-colour);
   border-radius: var(--border-rad);
 }

@@ -16,6 +16,21 @@ let currentMonthIndex = currentDate.getMonth()
 let selectedMonth = currentMonthIndex;
 let selectedYear = currentYear;
 
+//settings
+let params = new URLSearchParams(window.location.search);
+const root = document.querySelector(":root");
+
+function setVarValue(variable, value) {
+    const varName = '--' + variable;
+    root.style.setProperty(varName, value)
+}
+
+params.forEach((value, key) => {
+    if (key.endsWith('-colour')) {
+        setVarValue(key, value)
+    }
+})
+
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
