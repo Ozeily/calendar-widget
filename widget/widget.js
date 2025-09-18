@@ -174,6 +174,7 @@ function renderCalendar(month, year) {
     monthDiv.textContent = capitalize(new Date(year, month).toLocaleString('default', {month: 'long'}));
 
     //set default values
+    if (form) {
         form.querySelectorAll('[name]').forEach(input => {
             const varName = '--' + input.name;
             const cssVarValue = cssVars.getPropertyValue(varName).trim();
@@ -186,6 +187,7 @@ function renderCalendar(month, year) {
                 input.value = cssVarValue;
             }
         });
+    }
 
     applyCheckboxes()
 };
