@@ -96,8 +96,9 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
         console.log("form not found")
         const settings = getParamsObject(params)
-        applySettings(settings)
         renderCalendar(currentMonthIndex, currentYear);
+        applySettings(settings)
+        
         
         
     }
