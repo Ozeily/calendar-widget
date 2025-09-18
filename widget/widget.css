@@ -52,6 +52,10 @@ body {
   src: url("fonts/tangerine.ttf");
 }
 
+.rounded {
+  border-radius: var(--border-rad);
+}
+
 /* === Icons === */
 .material-symbols-rounded {
   font-variation-settings:
@@ -70,7 +74,7 @@ body {
   background-color: var(--cal-colour);
   max-width: 100%;
   height: 100%;
-  border-radius: var(--border-rad);
+  /* border-radius: var(--border-rad); */
   border: 1px solid var(--greyed-out-colour);
   padding: 10px;
 }
@@ -166,7 +170,7 @@ body {
   width: 100%;
   padding-bottom: 100%; /* height = width -> square */
   outline: var(--debug-outline);
-  border-radius: var(--border-rad);
+  /* border-radius: var(--border-rad); */
   background-color: transparent;
   color: var(--text-colour);
   box-sizing: border-box;
@@ -186,5 +190,5 @@ body {
 
 .current-date {
   background-color: var(--accent-colour);
-  border-radius: var(--border-rad);
+  /* border-radius: var(--border-rad); */
 }

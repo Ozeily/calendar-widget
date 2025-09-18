@@ -3,6 +3,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById("form")
     const preview = document.getElementById("preview")
 
+    //send settings to widget (avoid iframe update flash)
+    function sendSettings() {
+        if (!preview || !preview.contentWindow) { return };
+        const origin = window.location.origin;
+        const data = new FormData(form);
+        const params = Object.fromEntries(data.entries())
+        
+        //get checkboxes
+        form.querySelectorAll('input[type=checkbox]').forEach(cbox => {
+            params[cbox.name] = cbox.checked;
+        });
+
+        preview.contentWindow.postMessage({ type:"settings", payload: params}, origin)
+    }
+
     function addSetting(cbox) {
         const bigSetting = cbox.closest(".big-setting");
         const secSettings = bigSetting.querySelectorAll(".secondary-setting")
@@ -14,11 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    //when user enter an input, send settings to the widget
     if (form) {
         form.addEventListener('input', () => {
             const data = new FormData(form);
-            const params = new URLSearchParams(data);
-            preview.src = 'widget/widget.html?' + params.toString()
+            // const params = new URLSearchParams(data);
+            // preview.src = 'widget/widget.html?' + params.toString()
+
+            sendSettings();
 
         })
     }
