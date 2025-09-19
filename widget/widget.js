@@ -109,8 +109,9 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
         console.log("form not found")
         const settings = getParamsObject(params)
-        renderCalendar(currentMonthIndex, currentYear);
         applySettings(settings)
+        renderCalendar(currentMonthIndex, currentYear);
+        
     }
     prevMonthBtn.addEventListener("click", previousMonth)
     nextMonthBtn.addEventListener("click", nextMonth)
