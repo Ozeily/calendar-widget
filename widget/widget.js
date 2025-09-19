@@ -44,7 +44,7 @@ function getParamsObject(params) {
         if (key.endsWith('-colour') || key === 'font') {
             settings[key] = value;
         } else if (key === "rounded") {
-            settings[key] = value === 'true';
+            settings[key] = value === 'true' || value === 'on';
         }
     })
     
