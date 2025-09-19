@@ -72,7 +72,11 @@ function setVarValue(variable, value) {
     root.style.setProperty('--' + variable, value)
 }
 
-renderCalendar(currentMonthIndex, currentYear);
+try {
+    form = window.parent.document.getElementById('form');
+} catch (e) {
+    console.log("Not in iframe or cannot access parent document.");
+}
 
 window.addEventListener('DOMContentLoaded', () => {
     console.log('DOM ready');
