@@ -6,7 +6,7 @@ const yearDiv = document.getElementById("year");
 const prevMonthBtn = document.getElementById("prev-month");
 const nextMonthBtn = document.getElementById("next-month");
 
-const form = window.parent.document.getElementById('form'); //form de index.html (parent de l'iframe)
+//const form = window.parent.document.getElementById('form'); //form de index.html (parent de l'iframe)
 
 //current
 let currentDate = new Date();
@@ -72,11 +72,19 @@ function setVarValue(variable, value) {
     root.style.setProperty('--' + variable, value)
 }
 
+let form = null;
+
 try {
-    form = window.parent.document.getElementById('form');
+    if (window.self !== window.top) { // in iframe
+        form = window.parent.document.getElementById('form');
+        if (!form) console.warn("form not found in parent");
+    } else {
+        console.warn("Not in iframe");
+    }
 } catch (e) {
-    console.log("Not in iframe or cannot access parent document.");
+    console.warn("Cannot access parent document:", e);
 }
+
 
 window.addEventListener('DOMContentLoaded', () => {
     console.log('DOM ready');
@@ -90,10 +98,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (form) { //with customisation interface
         console.log("form found")
+        renderCalendar(currentMonthIndex, currentYear);
         window.addEventListener("message", (event) => {
         if (event.data?.type === "settings") {
             const settings = event.data.payload;
-            renderCalendar(currentMonthIndex, currentYear);
+            
             applySettings(settings)
             
         }});
@@ -102,9 +111,6 @@ window.addEventListener('DOMContentLoaded', () => {
         const settings = getParamsObject(params)
         renderCalendar(currentMonthIndex, currentYear);
         applySettings(settings)
-        
-        
-        
     }
     prevMonthBtn.addEventListener("click", previousMonth)
     nextMonthBtn.addEventListener("click", nextMonth)
