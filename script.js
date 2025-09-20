@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
         form.querySelectorAll('input[type=checkbox]').forEach(cbox => {
             params[cbox.name] = cbox.checked;
         });
+
+        preview.contentWindow.postMessage({ type:"settings", payload: params}, origin)
     }
 
     function addSetting(cbox) {
