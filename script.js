@@ -23,8 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         form.querySelectorAll('input[type=checkbox]').forEach(cbox => {
             params[cbox.name] = cbox.checked;
         });
-
-        preview.contentWindow.postMessage({ type:"settings", payload: params}, origin)
     }
 
     function addSetting(cbox) {
@@ -41,10 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //when user enter an input, send settings to the widget
     if (form) {
         form.addEventListener('input', () => {
-            const data = new FormData(form);
-            // const params = new URLSearchParams(data);
-            // preview.src = 'widget/widget.html?' + params.toString()
 
+            const data = new FormData(form);
             sendSettings();
 
         })

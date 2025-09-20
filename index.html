@@ -30,9 +30,10 @@
             <div class="setting">
                 <label for="font">Font</label>
                 <select id="font" name="font" name="font">
-                    <option value="papernotes" selected>Papernotes</option>
-                    <option>Romantic</option>
-                    <option>tangerine</option>
+                    <option value="papernotes" style="font-family: papernotes;" selected>Papernotes</option>
+                    <option style="font-family: 'Times New Roman', Times, serif">Times New Roman</option>
+                    <option style="font-family: tangerine">tangerine</option>
+                    <option value="Arial, Helvetica, sans-serif" style="font-family: Arial, Helvetica, sans-serif">Arial</option>
                 </select>
             </div>
 
@@ -54,11 +55,12 @@
             <div class="big-setting banner">
                 <div class="setting">
                     <label>Banner</label>
-                    <input id="banner" type="checkbox" onclick="addSetting(this)">
+                    <input id="banner" type="checkbox" onclick="addSetting(this)" name="banner">
                 </div>
                 <div class="setting banner secondary-setting">
-                    <label class="">Banner image</label>
-                    <input id="banner-img" type="textarea" name="banner-img">
+                    <label class="">Banner</label>
+                    <input id="banner-img" type="textarea" placeholder="image link" name="banner-img">
+                    <input id="banner-colour" type="color" name="banner-colour">
                 </div>
             </div>
             
@@ -66,6 +68,6 @@
         </form>
     </div>
 
-    <iframe src="widget/widget.html" height="350.5" id="preview"></iframe>
+    <iframe src="widget/widget.html" id="preview"></iframe>
 </body>
 </html>

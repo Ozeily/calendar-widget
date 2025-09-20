@@ -5,8 +5,7 @@ const yearDiv = document.getElementById("year");
 
 const prevMonthBtn = document.getElementById("prev-month");
 const nextMonthBtn = document.getElementById("next-month");
-
-//const form = window.parent.document.getElementById('form'); //form de index.html (parent de l'iframe)
+let form = null;
 
 //current
 let currentDate = new Date();
@@ -22,7 +21,6 @@ let selectedYear = currentYear;
 let params = new URLSearchParams(window.location.search);
 const root = document.querySelector(":root");
 
-
 function applySettings(settings) {
     //apply values to CSS variables
     for (const [key, value] of Object.entries(settings)) {
@@ -33,6 +31,28 @@ function applySettings(settings) {
             document.querySelectorAll(".calendar-div, .current-date").forEach(elt => {
                 elt?.classList.toggle("rounded", value === true) //? avoids bug if elt isn't loaded yet
             })
+        }
+        if (key === "banner") {
+            const bannerDiv = document.querySelector(".banner")
+            if (value === true ) {
+
+                bannerDiv.style.display = "block"
+
+                if (settings["banner-img"]) {
+                bannerDiv.innerHTML = `<img class="banner-img" src="${settings['banner-img']}">`;
+                } else if (settings["banner-colour"]) {
+                    bannerDiv.innerHTML = "";
+                    bannerDiv.style.backgroundColor = settings["banner-colour"];
+                } else {
+                    bannerDiv.innerHTML = "";
+                    bannerDiv.style.backgroundColor = '#ccc';
+                }
+
+            } else {
+                bannerDiv.style.display = "none"
+            }
+            
+            
         }
     }
 }
@@ -45,6 +65,10 @@ function getParamsObject(params) {
             settings[key] = value;
         } else if (key === "rounded") {
             settings[key] = value === 'true' || value === 'on';
+        } else if (key === "banner") {
+            settings[key] = value === 'true' || value === 'on';
+        } else if (key === "banner-img") {
+            settings[key] = value;
         }
     })
     
@@ -72,8 +96,6 @@ function setVarValue(variable, value) {
     root.style.setProperty('--' + variable, value)
 }
 
-let form = null;
-
 try {
     if (window.self !== window.top) { // in iframe
         form = window.parent.document.getElementById('form');
@@ -85,11 +107,10 @@ try {
     console.warn("Cannot access parent document:", e);
 }
 
-
 window.addEventListener('DOMContentLoaded', () => {
     console.log('DOM ready');
     
-    // test que les éléments sont bien récupérés
+    //all elements loaded
     console.log('daysDiv:', daysDiv);
     console.log('monthDiv:', monthDiv);
     console.log('yearDiv:', yearDiv);
@@ -116,10 +137,6 @@ window.addEventListener('DOMContentLoaded', () => {
     prevMonthBtn.addEventListener("click", previousMonth)
     nextMonthBtn.addEventListener("click", nextMonth)
 })
-
-
-
-
 
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -174,14 +191,14 @@ for (let i = 1; i <= blanksBefore; i++) {
 
 // Populate the days
 for (let i = 1; i <= daysInMonth; i++) {
-    const day = document.createElement('div');  // div plutôt que span pour cohérence CSS
+    const day = document.createElement('div');
     day.classList.add('day');
     day.dataset.date = new Date(year, month, i).toDateString();
     const span = document.createElement('span');
     span.textContent = i;
     day.appendChild(span);
 
-    // classe current-date si date du jour
+    // current-date class if today's date
     let divDay = new Date(year, month, i);
     if (
         divDay.getFullYear() === currentYear &&
@@ -232,10 +249,7 @@ function renderCalendar(month, year) {
     applyCheckboxes()
 };
 
-
-
 //controls
-
 function previousMonth() {
     if (selectedMonth === 0) { selectedMonth = 11; selectedYear -= 1}
     else { selectedMonth -= 1}
