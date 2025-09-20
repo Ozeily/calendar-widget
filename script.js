@@ -38,6 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    window.addEventListener('message', (event) => {
+        if (event.data?.type === "setHeight") {
+            preview.style.height = event.data.height + "px"
+        }
+    })
+
     //when user enter an input, send settings to the widget
     if (form) {
         form.addEventListener('input', () => {

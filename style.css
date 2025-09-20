@@ -1,6 +1,6 @@
 /* === Variables === */
 :root {
-    --debug-outline: 1px solid;
+    --debug-outline: none;
 }
 
 /* === Reset === */
@@ -22,9 +22,18 @@ html, body {
 body {
     display: flex;
 }
+.iframe-wrapper {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    height: 100%;
+    padding: 0 calc(75px/2);
+    align-items: center;
+    overflow: hidden;
+}
 
 iframe {
-    width: 50%;
+    width: 100%;
 }
 
 /* === Settings === */
@@ -32,6 +41,7 @@ iframe {
 .settings {
     width: 50%;
     padding: 5px;
+    outline: 1px solid lightgray;
 }
 
 form {
@@ -42,7 +52,6 @@ form {
 .big-setting {
     display: flex;
     flex-direction: column;
-    background-color: grey;
 }
 .setting {
     display: flex;
@@ -77,7 +86,7 @@ select, select::picker(select) {
 
 input[type=color] {
     appearance: none;
-    border: none;
+    border: 1px solid lightgray;
     background: transparent;
     height: 25px;
     width: 25px;

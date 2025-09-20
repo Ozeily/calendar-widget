@@ -21,6 +21,17 @@ let selectedYear = currentYear;
 let params = new URLSearchParams(window.location.search);
 const root = document.querySelector(":root");
 
+function sendHeight() {
+    const height = document.querySelector('.calendar-div').getBoundingClientRect().height;
+    console.log(height)
+    window.parent.postMessage({type:'setHeight', height}, '*')
+    
+}
+
+const observer = new ResizeObserver(() => {
+    sendHeight();
+})
+
 function applySettings(settings) {
     //apply values to CSS variables
     for (const [key, value] of Object.entries(settings)) {
@@ -34,6 +45,7 @@ function applySettings(settings) {
         }
         if (key === "banner") {
             const bannerDiv = document.querySelector(".banner")
+            if (!bannerDiv) return;
             if (value === true ) {
 
                 bannerDiv.style.display = "block"
@@ -55,6 +67,13 @@ function applySettings(settings) {
             
         }
     }
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            sendHeight()
+        }, 30)
+        
+    })
+    
 }
 
 function getParamsObject(params) {
@@ -116,6 +135,12 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log('yearDiv:', yearDiv);
     console.log('prevMonthBtn:', prevMonthBtn);
     console.log('nextMonthBtn:', nextMonthBtn);
+
+    const calendar = document.querySelector(".calendar-div")
+    if (calendar) {
+        observer.observe(calendar)
+        sendHeight()
+    }
 
     if (form) { //with customisation interface
         console.log("form found")
@@ -247,6 +272,7 @@ function renderCalendar(month, year) {
     }
 
     applyCheckboxes()
+    sendHeight()
 };
 
 //controls
