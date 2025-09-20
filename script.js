@@ -1,3 +1,12 @@
+function getBaseURL() {
+    const currentHost = window.location.hostname;
+    if (currentHost.includes("ozeily.github.io")) {
+        return "https://ozeily.github.io/embeddable-calendar-widget/widget/widget.html?";
+    } else {
+        return "https://127.0.0.1:5500/widget/widget.html?"
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const form = document.getElementById("form")
@@ -45,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!form) { return }
         const data = new FormData(form);
         const params = new URLSearchParams(data);
-        const url = 'https://ozeily.github.io/embeddable-calendar-widget/widget/widget.html?' + params.toString();
+        const url = getBaseURL() + params.toString();
 
         navigator.clipboard.writeText(url)
         .then(() => { alert('Texte copié:' + url) })
