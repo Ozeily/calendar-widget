@@ -42,31 +42,26 @@ function applySettings(settings) {
             document.querySelectorAll(".calendar-div, .current-date").forEach(elt => {
                 elt?.classList.toggle("rounded", value === true) //? avoids bug if elt isn't loaded yet
             })
-        }
-        if (key === "banner") {
-            const bannerDiv = document.querySelector(".banner")
+        } if (key === "banner") {
+            const bannerDiv = document.querySelector(".banner-div");
             if (!bannerDiv) return;
-            if (value === true ) {
-
-                bannerDiv.style.display = "block"
-
+            if (value === true) {
+                bannerDiv.style.display = "block";
                 if (settings["banner-img"]) {
-                bannerDiv.innerHTML = `<img class="banner-img" src="${settings['banner-img']}">`;
+                    bannerDiv.innerHTML = `<img class="banner-img" src="${settings['banner-img']}">`;
+                    bannerDiv.style.backgroundColor = ""; // reset background
                 } else if (settings["banner-colour"]) {
                     bannerDiv.innerHTML = "";
                     bannerDiv.style.backgroundColor = settings["banner-colour"];
-                } else {
-                    bannerDiv.innerHTML = "";
-                    bannerDiv.style.backgroundColor = '#ccc';
                 }
-
             } else {
-                bannerDiv.style.display = "none"
+                bannerDiv.style.display = "none";
+                bannerDiv.innerHTML = "";
+                bannerDiv.style.backgroundColor = "";
             }
-            
-            
         }
     }
+
     requestAnimationFrame(() => {
         setTimeout(() => {
             sendHeight()
@@ -264,9 +259,11 @@ function renderCalendar(month, year) {
             if (cssVarValue !== "") {
                 if (input.type === 'checkbox') { 
                     input.checked = cssVarValue === 'true';
-                };
+                } else {
+                    input.value = cssVarValue;
+                }
 
-                input.value = cssVarValue;
+                
             }
         });
     }

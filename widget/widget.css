@@ -70,12 +70,12 @@ body {
   overflow: hidden;
 }
 
-.banner {
+.banner-div {
   display: none;
   height: 75px;
   width: 100%;
   overflow: hidden;
-  background-color: #ccc;
+  background-color: var(--banner);
 }
 
 .calendar-wrapper {

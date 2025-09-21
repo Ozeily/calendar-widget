@@ -12,6 +12,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById("form")
     const preview = document.getElementById("preview")
 
+    function cleanParams(params) { //remove unecessary params
+        for (const key in params) {
+            const value = params[key]
+
+            if (typeof value === 'boolean') continue;
+            //delete unecessary params
+            if (value === null || value === undefined || typeof value === 'string' && value.trim() === "") {
+                delete params[key]
+            }
+        }
+
+        if ("banner-img" in params) { //delete banner-colour param if there is an img
+            delete params["banner-colour"]
+        }
+
+        return params
+
+    }
+
     //send settings to widget (avoid iframe update flash)
     function sendSettings() {
         if (!preview || !preview.contentWindow) { return };
@@ -22,9 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
         //get checkboxes
         form.querySelectorAll('input[type=checkbox]').forEach(cbox => {
             params[cbox.name] = cbox.checked;
+            console.log(cbox, params[cbox.name])
         });
 
-        preview.contentWindow.postMessage({ type:"settings", payload: params}, origin)
+        const cleanedParams = cleanParams(params)
+
+        preview.contentWindow.postMessage({ type:"settings", payload: cleanedParams}, origin)
     }
 
     function addSetting(cbox) {
@@ -49,6 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('input', () => {
 
             const data = new FormData(form);
+
+            for (const [key, value] of data.entries()) {
+            console.log(key, value);
+            }
+            
             sendSettings();
 
         })
@@ -57,8 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
     window.copyUrl = function() {
         if (!form) { return }
         const data = new FormData(form);
-        const params = new URLSearchParams(data);
-        const url = getBaseURL() + params.toString();
+        const rawParams = Object.fromEntries(data.entries()) //convert data to object
+
+        for (const [key, value] of data.entries()) {
+            console.log(key, value);
+        }
+
+        const params = cleanParams(rawParams); //removed unecessary params
+        const url = getBaseURL() + new URLSearchParams(params).toString();
 
         navigator.clipboard.writeText(url)
         .then(() => { alert('Texte copié:' + url) })
