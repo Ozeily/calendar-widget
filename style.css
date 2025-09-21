@@ -22,6 +22,7 @@ html, body {
 body {
     display: flex;
 }
+
 .iframe-wrapper {
     display: flex;
     width: 100%;
@@ -96,4 +97,70 @@ input[type=color]::-webkit-color-swatch-wrapper, input[type=color]::-webkit-colo
     padding: 0;
     border: none;
 
+}
+
+/* === TOGGLE SWITCH === */
+
+input[type=text] {
+    outline: 1px solid lightgrey
+}
+
+/*text + slider*/
+.switch {
+    display: inline-flex;
+    width: 100%;
+}
+
+/*text*/
+.switch-label {
+    user-select: none;
+}
+
+/*whole toggle-switch container*/
+.slider-wrapper {
+    position: relative;
+    margin-left: auto; /*to the right*/
+}
+
+/*hide checkbox (keeps width for accessability)*/
+.slider-wrapper input {
+    opacity: 0;
+    width: 34px;
+    height: 0;
+}
+
+/*slider (white circle)*/
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 18px;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+  outline: 1px solid lightgrey;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  background-color: rgb(238, 238, 238);
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+/*toggle switch background*/
+.slider-wrapper input:checked + .slider {
+  background-color: #2196F3;
+}
+
+/*animation when toggle on*/
+.slider-wrapper input:checked + .slider:before {
+  transform: translateX(16px);
 }

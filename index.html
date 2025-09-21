@@ -13,18 +13,30 @@
         <form action="" id="form">
         
             <div class="setting">
-                <label for="rounded">Rounded</label>
-                <input type="checkbox" class="toggle" id="rounded" name="rounded" checked>
+                <label class="switch">
+                    <span class="switch-label">Rounded</span>
+                    <div class="slider-wrapper">
+                        <input type="checkbox" class="toggle" id="rounded" name="rounded" checked>
+                        <span class="slider"></span>
+                    </div>
+                </label>
             </div>
 
-            <div class="setting">
-                <label for="currDate-highlight">Current date highlight</label>
-                <input type="checkbox" class="toggle" id="currDate-highlight" name="currDate-highlight">
-            </div>
-
-            <div class="setting">
-                <label>Calendar colour</label>
-                <input id="cal-colour" type="color" name="cal-colour">
+            <div class="big-setting banner-container">
+                <div class="setting">
+                    <label class="switch">
+                        <span class="switch-label">Banner</span>
+                        <div class="slider-wrapper">
+                            <input id="banner" type="checkbox" onclick="addSetting(this)" name="banner">
+                            <span class="slider"></span>
+                        </div>
+                    </label>
+                </div>
+                <div class="setting banner secondary-setting">
+                    <label>Banner setting</label>
+                    <input id="banner-img" type="text" placeholder="image link" name="banner-img">
+                    <input id="banner-colour" type="color" name="banner-colour">
+                </div>
             </div>
 
             <div class="setting">
@@ -38,13 +50,18 @@
             </div>
 
             <div class="setting">
-                <label>Text colour</label>
-                <input id="text-colour" type="color" name="text-colour">
+                <label>Calendar colour</label>
+                <input id="cal-colour" type="color" name="cal-colour">
             </div>
 
             <div class="setting">
-                <label>Accent colour</label>
-                <input id="accent-colour" type="color" name="accent-colour">
+                <label for="border-colour">Border colour</label>
+                <input id="border-colour" type="color" name="border-colour">
+            </div>
+
+            <div class="setting">
+                <label>Text colour</label>
+                <input id="text-colour" type="color" name="text-colour">
             </div>
 
             <div class="setting">
@@ -52,16 +69,14 @@
                 <input id="greyed-out-colour" type="color" name="greyed-out-colour">
             </div>
 
-            <div class="big-setting banner-container">
-                <div class="setting">
-                    <label for="banner">Banner</label>
-                    <input id="banner" type="checkbox" onclick="addSetting(this)" name="banner">
-                </div>
-                <div class="setting banner secondary-setting">
-                    <label>Banner setting</label>
-                    <input id="banner-img" type="text" placeholder="image link" name="banner-img">
-                    <input id="banner-colour" type="color" name="banner-colour">
-                </div>
+            <div class="setting">
+                <label for="currDateHighlight-colour">Current date highlight</label>
+                <input type="color" id="currDateHighlight-colour" name="currDateHighlight-colour">
+            </div>
+
+            <div class="setting">
+                <label for="currDateText-colour">Current date text</label>
+                <input type="color" id="currDateText-colour" name="currDateText-colour">
             </div>
             
             <button id="copy-url" type="button" onclick="copyUrl()">Copy URL</button>

@@ -4,13 +4,14 @@
   --debug-outline: none;
 
   --border-rad: 10px;
-  --currDateHighlight: var(--accent);
+  --border-colour: var(--greyed-out-colour);
+  --currDateHighlight-colour: var(--greyed-out-colour);
+  --currDateText-colour: var(--text-colour);
   --cal-colour: #ffffff;
   --font: papernotes;
   --text-colour: #000000;
   --greyed-out-colour: #9d9d9d;
   --banner: none;
-  --accent-colour: #dbdbdb;
 }
 
 /* === Reset === */
@@ -66,7 +67,7 @@ body {
   align-items: center;
   background-color: var(--cal-colour);
   max-width: 100%;
-  border: 1px solid var(--greyed-out-colour);
+  border: 1px solid var(--border-colour);
   overflow: hidden;
 }
 
@@ -76,6 +77,10 @@ body {
   width: 100%;
   overflow: hidden;
   background-color: var(--banner);
+}
+
+.banner-img {
+  max-width: 100%; /*fit in banner-div*/
 }
 
 .calendar-wrapper {
@@ -189,6 +194,6 @@ body {
 .blank { color: var(--greyed-out-colour);}
 
 .current-date {
-  background-color: var(--accent-colour);
-  /* border-radius: var(--border-rad); */
+  background-color: var(--currDateHighlight-colour);
+  color: var(--currDateText-colour);
 }
