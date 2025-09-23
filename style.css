@@ -1,6 +1,8 @@
 /* === Variables === */
 :root {
     --debug-outline: none;
+    --accent-colour: #62d388;
+    --unactive-colour: #25713e;
 }
 
 /* === Reset === */
@@ -43,11 +45,18 @@ iframe {
     width: 50%;
     padding: 5px;
     outline: 1px solid lightgray;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 form {
     display: flex;
     flex-direction: column;
+}
+
+.divider {
+    height: 1px;
+    margin: 0 2%;
+    background-color: rgb(234, 234, 234);
 }
 
 .big-setting {
@@ -58,15 +67,20 @@ form {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 5px;
+    padding: 10px 5px;
 }
 
 .secondary-setting {
-    display: none;
+    display: flex;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 5px;
 }
 
 .secondary-setting.displayed {
     display: flex;
+    max-height: 200px;
 }
 
 input[type=color] {
@@ -75,14 +89,26 @@ input[type=color] {
     border-radius: 15%;
 }
 
+button {
+    background-color: var(--accent-colour);
+    padding: 8px 24px;
+    margin: 10px auto;
+    border-radius: 34px;
+}
+
 button:active {
-    background-color: grey;
+    background-color: var(--unactive-colour);
+    color: white;
 }
 
 select, select::picker(select) {
     appearance: base-select;
     padding: 2px 5px;
     border: 1px solid lightgrey;
+}
+
+option::checkmark {
+    content: none;
 }
 
 input[type=color] {
@@ -157,7 +183,7 @@ input[type=text] {
 
 /*toggle switch background*/
 .slider-wrapper input:checked + .slider {
-  background-color: #2196F3;
+  background-color: var(--accent-colour);
 }
 
 /*animation when toggle on*/
