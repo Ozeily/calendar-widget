@@ -3,6 +3,8 @@
     --debug-outline: none;
     --accent-colour: #62d388;
     --unactive-colour: #25713e;
+
+    --iframe-aspect-ratio: 150/176.5;
 }
 
 /* === Reset === */
@@ -30,20 +32,23 @@ body {
     width: 100%;
     flex: 1;
     height: 100%;
-    padding: 0 75px;
+    padding: 20px;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
+    background-color: grey;
 }
 
 iframe {
-    width: 100%;
+    max-width: 100%;
+    aspect-ratio: var(--iframe-aspect-ratio);
 }
 
 /* === Settings === */
 
 .settings {
     width: 50%;
-    padding: 5px;
+    padding: 10px;
     outline: 1px solid lightgray;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -94,6 +99,7 @@ button {
     padding: 8px 24px;
     margin: 10px auto;
     border-radius: 34px;
+    color: black;
 }
 
 button:active {
@@ -189,4 +195,32 @@ input[type=text] {
 /*animation when toggle on*/
 .slider-wrapper input:checked + .slider:before {
   transform: translateX(16px);
+}
+
+/* ==== MEDIA QUERIES ==== */
+
+@media (max-width: 48em) { /*tablet portrait mode*/
+    body {
+        flex-direction: column;
+    }
+    .iframe-wrapper {
+        order: 1;
+        height: 50%;
+        position: sticky;
+        top: 0;
+        margin-bottom: -1rem;
+    }
+    iframe {
+        margin: 0 auto 1rem auto;
+        height: 100%
+    }
+    .settings {
+        order: 2; /*below preview*/
+        height: 50%;
+        width: 100%;
+        border-radius: 10px;
+        z-index: 10;
+        background-color: white;
+        overflow: auto;
+    }
 }

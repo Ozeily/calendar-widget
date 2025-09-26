@@ -17,8 +17,8 @@ Customisable, and completely free.
 2. Click on "Copy URL"
 3. Using the provided URL, embed it where you want!
 
-> [!CAUTION] About the customisation interface
-> - It is **not made for small screens** (phones / screens on portrait mode).
+> [!CAUTION]
+> - The customisation interface is **not made for small screens** (phones / screens on portrait mode).
 > - **Page refresh**: solves most preview issues, but will reset all the settings
 > - **Preview too big**: try using full screen mode. If it doesn't work, I'm sorry but I have no solution for it yet.
 
@@ -34,7 +34,7 @@ insert the following block:
 - Replace (width) with the desired width
 - The height depends on the width and if there is a banner or not.
   For reference:
-| | **Without banner** | **With banner** | 
+| **`** | **Without banner** | **With banner** | 
 | --- | --- | --- |
 | **Width (px)**  | 150 | 150 | 
 | **Height (px)** | 191 | 266 |

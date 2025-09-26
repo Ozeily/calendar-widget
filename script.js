@@ -3,14 +3,17 @@ function getBaseURL() {
     if (currentHost.includes("ozeily.github.io")) {
         return "https://ozeily.github.io/embeddable-calendar-widget/widget/widget.html?";
     } else {
-        return "https://127.0.0.1:5500/widget/widget.html?"
+        return window.location.origin;
     }
 }
+
+let aspectRatio = document.querySelector(":root").style.getPropertyValue("--iframe-aspect-ratio")
 
 document.addEventListener('DOMContentLoaded', () => {
 
     const form = document.getElementById("form")
     const preview = document.getElementById("preview")
+    const iframeWrapper = document.querySelector(".iframe-wrapper")
 
     function cleanParams(params) { //remove unecessary params
         for (const key in params) {
@@ -41,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
         //get checkboxes
         form.querySelectorAll('input[type=checkbox]').forEach(cbox => {
             params[cbox.name] = cbox.checked;
-            console.log(cbox, params[cbox.name])
         });
 
         const cleanedParams = cleanParams(params)
@@ -60,35 +62,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    window.addEventListener('message', (event) => {
-        if (event.data?.type === "setHeight") {
-            preview.style.height = event.data.height + "px"
-        }
-    })
+    function updateIframeSize() {
+        const IFstyle = getComputedStyle(iframeWrapper)
+        const spaceTop = parseFloat(IFstyle.paddingTop);
+        const spaceBot = parseFloat(IFstyle.paddingBottom);
+        const totalSpace = spaceTop + spaceBot;
+        const wrapperW = parseFloat(iframeWrapper.clientWidth);
+        const aspectRatio = window.getComputedStyle(document.body).getPropertyValue("--iframe-aspect-ratio").trim()
+
+        const newHeight = wrapperW / aspectRatio;
+
+        preview.style.height = `${newHeight - totalSpace}px`;
+    }
+
+    const Observer = new ResizeObserver(updateIframeSize)
+    Observer.observe(iframeWrapper)
+    updateIframeSize()
 
     //when user enter an input, send settings to the widget
     if (form) {
         form.addEventListener('input', () => {
 
             const data = new FormData(form);
-
-            for (const [key, value] of data.entries()) {
-            console.log(key, value);
-            }
             
             sendSettings();
 
         })
     }
 
+    window.addEventListener('message', (event) => {
+        if (event.data.type === 'aspectRatio') {
+            aspectRatio = event.data.aspectRatio;
+            setVarValue("iframe-aspect-ratio", `${aspectRatio}`)
+            updateIframeSize()
+        }
+    });
+
     window.copyUrl = function() {
         if (!form) { return }
         const data = new FormData(form);
         const rawParams = Object.fromEntries(data.entries()) //convert data to object
-
-        for (const [key, value] of data.entries()) {
-            console.log(key, value);
-        }
 
         const params = cleanParams(rawParams); //removed unecessary params
         const url = getBaseURL() + new URLSearchParams(params).toString();

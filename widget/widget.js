@@ -16,21 +16,24 @@ let currentMonthIndex = currentDate.getMonth()
 //variables
 let selectedMonth = currentMonthIndex;
 let selectedYear = currentYear;
+let aspectRatio = (150/176.5);
 
 //settings
 let params = new URLSearchParams(window.location.search);
 const root = document.querySelector(":root");
 
-function sendHeight() {
-    const height = document.querySelector('.calendar-div').getBoundingClientRect().height;
-    console.log(height)
-    window.parent.postMessage({type:'setHeight', height}, '*')
-    
+function getBaseURL() {
+    const currentHost = window.location.hostname;
+    if (currentHost.includes("ozeily.github.io")) {
+        return "https://ozeily.github.io/embeddable-calendar-widget/widget/widget.html?";
+    } else {
+        return "http://127.0.0.1:3000/widget/widget.html?"
+    }
 }
 
-const observer = new ResizeObserver(() => {
-    sendHeight();
-})
+function sendAspectRatio() {
+    window.parent.postMessage({ type: 'aspectRatio', aspectRatio }, getBaseURL());
+}
 
 function applySettings(settings) {
     //apply values to CSS variables
@@ -46,28 +49,30 @@ function applySettings(settings) {
             const bannerDiv = document.querySelector(".banner-div");
             if (!bannerDiv) return;
             if (value === true) {
+
+                aspectRatio = (300 / 426);
                 bannerDiv.style.display = "block";
+
                 if (settings["banner-img"]) {
+
                     bannerDiv.innerHTML = `<img class="banner-img" src="${settings['banner-img']}">`;
                     bannerDiv.style.backgroundColor = ""; // reset background
+
                 } else if (settings["banner-colour"]) {
+
                     bannerDiv.innerHTML = "";
                     bannerDiv.style.backgroundColor = settings["banner-colour"];
+
                 }
             } else {
+                aspectRatio = (300/351);
                 bannerDiv.style.display = "none";
                 bannerDiv.innerHTML = "";
                 bannerDiv.style.backgroundColor = "";
             }
         }
     }
-
-    requestAnimationFrame(() => {
-        setTimeout(() => {
-            sendHeight()
-        }, 30)
-        
-    })
+    sendAspectRatio()
     
 }
 
@@ -98,7 +103,6 @@ function applyCheckboxes() {
         }
         
     }
-    console.log("applyCheckboxes, isRounded:", isRounded);
 
     document.querySelectorAll(".calendar-div, .current-date").forEach(elt => {
         elt.classList.toggle("rounded", isRounded);
@@ -122,23 +126,10 @@ try {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM ready');
-    
-    //all elements loaded
-    console.log('daysDiv:', daysDiv);
-    console.log('monthDiv:', monthDiv);
-    console.log('yearDiv:', yearDiv);
-    console.log('prevMonthBtn:', prevMonthBtn);
-    console.log('nextMonthBtn:', nextMonthBtn);
 
     const calendar = document.querySelector(".calendar-div")
-    if (calendar) {
-        observer.observe(calendar)
-        sendHeight()
-    }
 
     if (form) { //with customisation interface
-        console.log("form found")
         renderCalendar(currentMonthIndex, currentYear);
         window.addEventListener("message", (event) => {
         if (event.data?.type === "settings") {
@@ -148,7 +139,6 @@ window.addEventListener('DOMContentLoaded', () => {
             
         }});
     } else {
-        console.log("form not found")
         const settings = getParamsObject(params)
         applySettings(settings)
         renderCalendar(currentMonthIndex, currentYear);
@@ -269,7 +259,6 @@ function renderCalendar(month, year) {
     }
 
     applyCheckboxes()
-    sendHeight()
 };
 
 //controls
