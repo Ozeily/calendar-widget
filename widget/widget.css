@@ -72,6 +72,8 @@ body {
   min-width: 150px;
   max-height: none;
   border: 1px solid var(--border-colour);
+
+  overflow: hidden; /*prevent banner-div from overflowing*/
 }
 
 .banner-div {
@@ -201,4 +203,13 @@ body {
 .current-date {
   background-color: var(--currDateHighlight-colour);
   color: var(--currDateText-colour);
+}
+
+/*widget clone*/
+.clone {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
