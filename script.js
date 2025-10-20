@@ -1,4 +1,3 @@
-//script.js
 function getBaseURL() {
     const currentHost = window.location.hostname;
     if (currentHost.includes("ozeily.github.io")) {
@@ -7,6 +6,8 @@ function getBaseURL() {
         return window.location.origin;
     }
 }
+
+let aspectRatio = document.querySelector(":root").style.getPropertyValue("--iframe-aspect-ratio")
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -47,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const cleanedParams = cleanParams(params)
 
-        preview.contentWindow.postMessage({ type:"settings", payload: cleanedParams}, '*')
+        preview.contentWindow.postMessage({ type:"settings", payload: cleanedParams}, origin)
     }
 
     function addSetting(cbox) {
@@ -61,6 +62,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function updateIframeSize() {
+        const IFstyle = getComputedStyle(iframeWrapper)
+        const spaceTop = parseFloat(IFstyle.paddingTop);
+        const spaceBot = parseFloat(IFstyle.paddingBottom);
+        const totalSpace = spaceTop + spaceBot;
+        const wrapperW = parseFloat(iframeWrapper.clientWidth);
+        const aspectRatio = window.getComputedStyle(document.body).getPropertyValue("--iframe-aspect-ratio").trim()
+
+        const newHeight = wrapperW / aspectRatio;
+
+        preview.style.height = `${newHeight - totalSpace}px`;
+    }
+
+    const Observer = new ResizeObserver(updateIframeSize)
+    Observer.observe(iframeWrapper)
+    updateIframeSize()
+
     //when user enter an input, send settings to the widget
     if (form) {
         form.addEventListener('input', () => {
@@ -72,16 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    //message from iframe listener
-    window.addEventListener("message", (event) => {
-        if (event.data?.type === "newWidgetSize") {
-            preview.style.height = event.data.height + "px";
-            preview.style.width = event.data.width + "px";
+    window.addEventListener('message', (event) => {
+        if (event.data.type === 'aspectRatio') {
+            aspectRatio = event.data.aspectRatio;
+            setVarValue("iframe-aspect-ratio", `${aspectRatio}`)
+            updateIframeSize()
         }
-    })
-
-    
-   
+    });
 
     window.copyUrl = function() {
         if (!form) { return }
