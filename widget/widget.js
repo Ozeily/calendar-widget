@@ -25,7 +25,7 @@ const root = document.querySelector(":root");
 function getBaseURL() {
     const currentHost = window.location.hostname;
     if (currentHost.includes("ozeily.github.io")) {
-        return "https://ozeily.github.io/embeddable-calendar-widget/widget/widget.html?";
+        return "https://ozeily.github.io/calendar-widget/widget/widget.html?";
     } else {
         return "http://127.0.0.1:3000/widget/widget.html?"
     }
